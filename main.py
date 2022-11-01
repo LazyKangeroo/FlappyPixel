@@ -1,4 +1,6 @@
+from shutil import move
 from microbit import *
+import random
 
 class Flappy:
     Non = 0
@@ -39,17 +41,30 @@ class Flappy:
         if button_a.is_pressed():
             while (button_a.is_pressed()):
                 sleep(self.SAMPLETIME)
-            self.dirction = self.Down
+            self.down()
             ButtonPressed = True
 
         elif button_b.is_pressed():
             while (button_b.is_pressed()):
                 sleep(self.SAMPLETIME)
-            self.dirction = self.Up
+            self.up()
             ButtonPressed = True
 
         return ButtonPressed
 
+    def down(self):
+        self.dirction = self.Down
+        move()
+
+    def up(self):
+        self.dirction = self.Up
+        move()
+
     def move(self):
+        x = 1
         if self.dirction == self.Up:
+            y = y -1
+        if self.dirction == self.Down:
             y = y + 1
+
+        display(x,y,self.PLAYERBRIGHT)
