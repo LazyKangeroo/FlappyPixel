@@ -9,7 +9,6 @@ class Move:
     x = 1
     brightness = 9
 
-
     display.clear()
 
     def __init__(self):
@@ -37,6 +36,11 @@ class Move:
             self.y = self.y - 1
         if self.direction == self.Down:
             self.y = self.y + 1
+
+        if self.y < 0:
+            self.y = 4
+        elif self.y > 4:
+            self.y = 0
         return
 
 move = Move()
