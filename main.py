@@ -1,13 +1,19 @@
-# Moverment
+# Pillars
+# Testing the movement of the pillars
 from microbit import *
+import random
 
-class Move:
-    Up = 0
-    Down = 1
+class Pillars:
+    brightness = 5
+    MOVETIME = 500
+    StartX = 4
+    EndX = 1
 
-    y = 1
-    x = 1
-    brightness = 9
+    p1SafeY = 0
+    p2SafeY = 1
+    p3SafeY = 2
+    p4SafeY = 3
+    p5SafeY = 4
 
     display.clear()
 
@@ -15,33 +21,22 @@ class Move:
         pass
 
     def Go(self):
-        #display.set_pixel(self.x,self.y,self.brightness)
-        while True:
-            self.direction = self.handelBtn()
-            sleep(1000)
+        sleep(100)
+        display.clear()
+        self.creatPillar()
+
+    def creatPillar(self):
+        list = [self.p1SafeY, self.p2SafeY, self.p3SafeY,self.p4SafeY,self.p5SafeY]
+        pillarSafeY = random.choice(list)
+        x = self.StartX
+
+        for i in range(4):
+            sleep(self.MOVETIME)
             display.clear()
-            self.ChangePostion()
-            display.set_pixel(self.x,self.y,self.brightness)
+            for y in range(5):
+                if y == pillarSafeY: continue
+                display.set_pixel(x,y,self.brightness)
+            x = x - 1
 
-    def handelBtn(self):
-        while not button_a.is_pressed() and not button_b.is_pressed():
-            display.set_pixel(self.x,self.y,self.brightness)
-        if button_a.is_pressed():
-            return self.Up
-        if button_b.is_pressed():
-            return self.Down
-
-    def ChangePostion(self):
-        if self.direction == self.Up:
-            self.y = self.y - 1
-        if self.direction == self.Down:
-            self.y = self.y + 1
-
-        if self.y < 0:
-            self.y = 4
-        elif self.y > 4:
-            self.y = 0
-        return
-
-move = Move()
-move.Go()
+p = Pillars()
+p.Go()
